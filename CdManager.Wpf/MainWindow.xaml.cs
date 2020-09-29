@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CdManager.Model;
 
 namespace CdManager.Wpf
 {
@@ -20,9 +21,17 @@ namespace CdManager.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Cd> _cds;
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += new RoutedEventHandler(MainWindow_Loaded);
+        }
+        public void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Repository rep = Repository.GetInstance();
+            _cds = rep.GetAllCds();
+            lbxCds.ItemsSource = _cds;
         }
     }
 }
