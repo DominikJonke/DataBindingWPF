@@ -21,17 +21,46 @@ namespace CdManager.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Cd> _cds;
+        private List<Cd> _cds;
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            Loaded += MainWindow_Loaded;
         }
-        public void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Repository rep = Repository.GetInstance();
             _cds = rep.GetAllCds();
             lbxCds.ItemsSource = _cds;
+
+            btnNew.Click += BtnNew_Click;
+            btnDelete.Click += BtnDelete_Click;
         }
+
+        private void BtnNew_Click(object sender, RoutedEventArgs e)
+        {
+            AddCdWindow addCdWindow = new AddCdWindow();
+            addCdWindow.ShowDialog();
+            //Nachdem der "Neuanlegen Dialog" geschlossen wurde
+            //Liste der CDs aktualisieren:
+            _cds = Repository.GetInstance().GetAllCds();
+            //Bei normaler Collection muss zusätzlich ItemSource neu gesetzt werden um Aktualisierung auszulösen
+            lbxCds.ItemsSource = _cds;
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(lbxCds.SelectedItem is Cd selectedCd))
+            {
+                MessageBox.Show("Keine CD ausgewählt!");
+                return;
+            }
+
+            Repository.GetInstance().DeleteCd(selectedCd);
+
+            Repository repo = Repository.GetInstance();
+            _cds = repo.GetAllCds();
+            lbxCds.ItemsSource = _cds;
+        } 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Utils;
 
@@ -61,6 +62,10 @@ namespace CdManager.Model
             cds.Add(cd);
         }
 
+        public void DeleteCd(Cd cd)
+        {
+            cds.Remove(cd);
+        }
         /// <summary>
         /// Liefert eine (neue!) Liste aller Cds
         /// Entkoppelt die zurückgelieferte Collektion von der Collection im Repository
