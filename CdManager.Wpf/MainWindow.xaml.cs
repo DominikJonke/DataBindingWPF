@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CdManager.Model;
+using CdManager.Wpf.Windows;
 
 namespace CdManager.Wpf
 {
@@ -35,6 +36,7 @@ namespace CdManager.Wpf
 
             btnNew.Click += BtnNew_Click;
             btnDelete.Click += BtnDelete_Click;
+            btnEdit.Click += BtnEdit_Click;
         }
 
         private void BtnNew_Click(object sender, RoutedEventArgs e)
@@ -61,6 +63,23 @@ namespace CdManager.Wpf
             Repository repo = Repository.GetInstance();
             _cds = repo.GetAllCds();
             lbxCds.ItemsSource = _cds;
-        } 
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbxCds.SelectedItem is Cd cdToEdit)
+            {
+                EditCdWindow editCdWindow = new EditCdWindow(cdToEdit);
+                editCdWindow.ShowDialog();                                                          
+
+                Repository repo = Repository.GetInstance();
+                _cds = repo.GetAllCds();
+                lbxCds.ItemsSource = _cds;
+            }
+            else
+            {
+                MessageBox.Show("Keine CD ausgewählt!");
+            }
+        }
     }
 }

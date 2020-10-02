@@ -24,13 +24,13 @@ namespace CdManager.Wpf
         {
             InitializeComponent();
 
-            Loaded += new RoutedEventHandler(AddCdWindow_Loaded);
+            Loaded += AddCdWindow_Loaded;
         }
 
         public void AddCdWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            btnSave.Click += new RoutedEventHandler(BtnSave_Click);
-            btnCancel.Click += new RoutedEventHandler(BtnCancel_Click);
+            btnSave.Click += BtnSave_Click;
+            btnCancel.Click += BtnCancel_Click;
 
             DataContext = new Cd() { AlbumTitle = "", Artist = "" };
         }

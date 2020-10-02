@@ -66,6 +66,7 @@ namespace CdManager.Model
         {
             cds.Remove(cd);
         }
+
         /// <summary>
         /// Liefert eine (neue!) Liste aller Cds
         /// Entkoppelt die zurückgelieferte Collektion von der Collection im Repository
